@@ -1,5 +1,5 @@
 #include "dht22.h"
-
+#include <adri_tools_v2.h>
 #define MAX_SENSOR 10
 dht22Class 	* dht22ClassArray[MAX_SENSOR];
 
@@ -40,7 +40,7 @@ dht22Class * dht22Managment::module(int pos){
 
 
 dht22Class::dht22Class(int pin) {
-	_module = new DHT(5, DHT22);
+	_module = new DHT(pin, DHT22);
 	begin();
 }
 void dht22Class::begin(){
@@ -91,6 +91,18 @@ void dht22Class::domoticzJson(JsonObject & root){
 	boolean state;
 	read_temperature(value_1, state);
 	read_humidity(value_2, state);
+
+    int hum_stat = 0;
+    if ( value_2 > 70 ) {
+      	hum_stat = 3;
+    } else if ( value_2 < 30 ) {
+      	hum_stat = 2; 
+    } else if ( value_2 >= 30 & value_2 <= 45 ) {
+      	hum_stat = 0;
+    } else if ( value_2 > 45 & value_2 <= 70 ) {
+      	hum_stat = 1;
+    }
+
 	root[F("nvalue")] = 0;
-	root[F("svalue")] = String(value_1) + ";" + String(value_2) + ";0";
+	root[F("svalue")] = String(value_1) + ";" + String(value_2) + ";" + String(hum_stat);
 }

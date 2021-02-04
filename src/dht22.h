@@ -8,6 +8,10 @@
 	class dht22Class
 	{
 		DHT  * _module;
+		float _last_t = 0;
+		float _last_h = 0;
+		float _last_f = 0;
+		float _last_i = 0;
 	public:
 		dht22Class(int pin);
 		~dht22Class(){};

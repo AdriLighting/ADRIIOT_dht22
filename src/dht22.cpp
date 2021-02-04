@@ -50,31 +50,35 @@ void dht22Class::read_temperature(float & result, boolean & isNan){
 	float h = _module->readHumidity();
 	float t = _module->readTemperature();
 	float f = _module->readTemperature(true);
-	if (isnan(h) || isnan(t) || isnan(f)) {isNan = false; return;}
+	if (isnan(h) || isnan(t) || isnan(f)) {isNan = false; result = _last_t; return;}
 	isNan 	= true;
 	result 	= t;
+	_last_t = t;
 }
 void dht22Class::read_temperatureF(float & result, boolean & isNan){
 	float h = _module->readHumidity();
 	float t = _module->readTemperature();
 	float f = _module->readTemperature(true);
-	if (isnan(h) || isnan(t) || isnan(f)) {isNan = false; return;}
+	if (isnan(h) || isnan(t) || isnan(f)) {isNan = false; result = _last_f; return;}
 	isNan 	= true;
 	result 	= f;
+	_last_f = f;
 }
 void dht22Class::read_temperatureIndice(float & result, boolean & isNan){
 	float h = _module->readHumidity();
 	float t = _module->readTemperature();
 	float f = _module->readTemperature(true);
-	if (isnan(h) || isnan(t) || isnan(f)) {isNan = false; return;}
+	if (isnan(h) || isnan(t) || isnan(f)) {isNan = false; result = _last_i; return;}
 	isNan 	= true;
 	result 	= _module->computeHeatIndex(t, h, false);
+	_last_i = result;
 }
 void dht22Class::read_humidity(float & result, boolean & isNan){
 	float h = _module->readHumidity();
-	if (isnan(h)) {isNan = false; return;}	
+	if (isnan(h)) {isNan = false; result = _last_h; return;}
 	isNan 	= true;
 	result 	= h;
+	_last_h = h;
 }
 void dht22Class::json(JsonObject & root){
 	float value_1;

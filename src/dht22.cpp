@@ -1,6 +1,7 @@
 #include "dht22.h"
-#include <adri_tools_v2.h>
+
 #define MAX_SENSOR 10
+
 dht22Class 	* dht22ClassArray[MAX_SENSOR];
 
 dht22Managment::dht22Managment(){
@@ -101,9 +102,9 @@ void dht22Class::domoticzJson(JsonObject & root){
       	hum_stat = 3;
     } else if ( value_2 < 30 ) {
       	hum_stat = 2; 
-    } else if ( value_2 >= 30 & value_2 <= 45 ) {
+    } else if ( (value_2 >= 3) && (value_2 <= 45) ) {
       	hum_stat = 0;
-    } else if ( value_2 > 45 & value_2 <= 70 ) {
+    } else if ( (value_2 > 45) && (value_2 <= 70) ) {
       	hum_stat = 1;
     }
 
